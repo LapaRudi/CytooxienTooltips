@@ -27,3 +27,10 @@
 <br>
 <img width="450" height="386" alt="image" src="https://github.com/user-attachments/assets/4f9cd561-0b23-43f0-a31d-3b2ed9f9ec7a" />
 <img width="549" height="292" alt="image" src="https://github.com/user-attachments/assets/4483e68c-3c93-4583-842d-603ba4070322" />
+<br>
+<br>
+<br>
+<br>
+**Genaue verbleibende Spawn-Anzahl von Spawnern:**<br>
+<br>
+<img width="488" height="245" alt="image" src="https://github.com/user-attachments/assets/4c710dcf-6f18-42fc-a58b-e71755a63b86" />
