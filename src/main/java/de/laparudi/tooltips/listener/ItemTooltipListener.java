@@ -25,6 +25,8 @@ public class ItemTooltipListener {
             final CustomModelData data = itemStack.get(DataComponents.CUSTOM_MODEL_DATA);
 
             final int id = (data != null && !data.floats().isEmpty()) ? data.floats().getFirst().intValue() : -1;
+            final String idDisplay = id == -1 ? "Keine" : String.valueOf(id);
+            
             final Item item = itemStack.getItem();
             final List<Component> vanillaTooltips = flag.isAdvanced() ?
                     new ArrayList<>(lines.subList(lines.size() - 2, lines.size())) : Collections.emptyList();
@@ -58,11 +60,15 @@ public class ItemTooltipListener {
                 final long turnipTimestamp = bukkitCompound.getLong("treasurechestitems:turnip_4_harvesttime").orElse(0L);
                 final String specialItem = bukkitCompound.getString("treasurechestitems:special_item").orElse("");
                 
+                final int emptyStorageLine = LoreUtils.findEmptyLine(lines, 3);
+                final int emptyGeneratorLine = LoreUtils.findEmptyLine(lines, 2);
+                final int emptySpawnerLine = LoreUtils.findEmptyLine(lines, 2) +1;
+                
                 if (id == 1001340 && itemStorage > 5000) {
-                    lines.add(6, LoreUtils.storageFormat(itemStorage, false));
+                    lines.add(emptyStorageLine, LoreUtils.storageFormat(itemStorage, false));
                 
                 } else if (id == 1007012 && lines.size() > 4 && venditor > 5000) {
-                    lines.add(7, LoreUtils.storageFormat(venditor, true));
+                    lines.add(emptyStorageLine, LoreUtils.storageFormat(venditor, true));
                     
                 } else if ( (id >= 1100979 && id <= 1100988) || (id >= 1100998 && id <= 1101002) ) {
                     final int line = LoreUtils.turnipLoreSize(bukkitCompound);
@@ -70,15 +76,14 @@ public class ItemTooltipListener {
                     lines.addAll(line, list);
 
                 } else if (id == 1100957 || id == 1100958 || id == 1100959) {
-                    lines.addAll(LoreUtils.generatorFormat(bukkitCompound));
+                    lines.addAll(emptyGeneratorLine, LoreUtils.generatorFormat(bukkitCompound));
 
-                } else if ("spawner".equals(specialItem)) {
-                    LoreUtils.formatSpawner(lines, bukkitCompound);
+                } else if (specialItem.equals("spawner")) {
+                    lines.set(emptySpawnerLine, LoreUtils.formatSpawner(bukkitCompound));
                 }
 
                 if (CytooxienTooltips.DEBUG) {
                     lines.add(Component.empty());
-                    String idDisplay = id == -1 ? "Keine" : String.valueOf(id);
                     lines.add(Component.literal("ModelData: ").withColor(0xFF39FF14)
                             .append(Component.literal(idDisplay).withColor(0xFFD81E5B)));
                     lines.add(Component.empty());
@@ -91,7 +96,6 @@ public class ItemTooltipListener {
 
             if (CytooxienTooltips.DEBUG) {
                 lines.add(Component.empty());
-                String idDisplay = id == -1 ? "Keine" : String.valueOf(id);
                 lines.add(Component.literal("ModelData: ").withColor(0xFF39FF14).append(Component.literal(idDisplay).withColor(0xFFD81E5B)));
             }
 

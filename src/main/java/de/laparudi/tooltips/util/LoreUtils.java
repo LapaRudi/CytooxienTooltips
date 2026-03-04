@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.IntStream;
 
 public class LoreUtils {
 
@@ -38,70 +39,66 @@ public class LoreUtils {
 
         return (dayDisplay + hourDisplay).trim();
     }
-    
+
     private static String formatDouble(final double input) {
         final NumberFormat format = NumberFormat.getNumberInstance(Locale.GERMANY);
         format.setMinimumFractionDigits(2);
         format.setMaximumFractionDigits(2);
         return format.format(input);
     }
-    
+
     private static String formatLong(final long input) {
         final NumberFormat format = NumberFormat.getNumberInstance(Locale.GERMANY);
         return format.format(input);
     }
-    
+
     private static final Component split = Component.literal(" | ").withStyle(ChatFormatting.DARK_GRAY);
-    
+
     public static List<Component> generatorFormat(final CompoundTag tag) {
         final List<Component> lore = new ArrayList<>();
-        
+
         if (Generators.generatorType(tag).equals("nether")) {
             final int soulSoilLevel = Generators.blockLevel(tag, "soul_soil");
             final int soulSandLevel = Generators.blockLevel(tag, "soul_sand");
             final int glowstoneLevel = Generators.blockLevel(tag, "glowstone");
-            
-            lore.add(Component.literal(" ")
-                    .append(blockLevelComponent("soul_soil", soulSoilLevel)).append(split)
-                    .append(blockLevelComponent("soul_sand", soulSandLevel)).append(split)
-                    .append(blockLevelComponent("glowstone", glowstoneLevel)));
+
+            lore.add(Component.literal(" ").append(blockLevelComponent("soul_soil", soulSoilLevel)).append(split).append(blockLevelComponent("soul_sand", soulSandLevel)).append(split).append(blockLevelComponent("glowstone", glowstoneLevel)));
         }
-        
+
         final double price = Generators.generatorPrice(tag);
         final long blocks = Generators.generatorBlocks(tag);
         if (blocks == 0) return lore;
-        
+
         final Component priceComponent = Component.literal(formatDouble(price)).withColor(0xFFFBECAB);
         final Component blocksComponent = Component.literal(formatLong(blocks)).withColor(0xFFFBECAB);
-        
-        lore.addAll(List.of(Component.empty(), Component.literal("Upgrade-Kosten: ").append(priceComponent),
-                Component.literal("Abgebaute Blöcke: ").append(blocksComponent)));
-        
+
+        lore.addAll(List.of(Component.empty(), Component.literal("Upgrade-Kosten: ").append(priceComponent), Component.literal("Abgebaute Blöcke: ").append(blocksComponent)));
+
         return lore;
     }
-    
+
     public static int turnipLoreSize(final CompoundTag tag) {
         int size = 6;
-        
+
         if (tag.getDouble("treasurechestitems:turnip_4_weight").orElse(0.0) > 1) size += 3;
         if (tag.getBoolean("treasurechestitems:turnip_4_shiny").orElse(false)) size += 3;
         if (tag.contains("treasurechestitems:turnip_4_appearance")) size += 3;
         return size;
     }
-    
+
     public static List<Component> turnipFormat(final long timestamp) {
         final Component date = Component.literal(formatTimestamp(timestamp)).withColor(0xFFFBECAB);
         final Component age = Component.literal(formatTimeDifference(timestamp)).withColor(0xFFFBECAB);
         return List.of(Component.empty(), Component.literal("Geerntet: ").append(date), Component.literal("Alter: ").append(age));
     }
-    
+
     public static Component storageFormat(final long space, final boolean venditor) {
         final double price = venditor ? venditor(space) : itemStorage(space);
         final Component component = Component.literal("~" + formatDouble(price)).withColor(0xFFFBECAB);
         return Component.literal("Kosten: ").append(component);
     }
 
-    public static void formatSpawner(final List<Component> lines, final CompoundTag tag) {
+    public static void formatSpawnerAlternative(final List<Component> lines, final CompoundTag tag) {
         final int remainingSpawns = tag.getInt("treasurechestitems:spawner_spawns").orElse(0);
         final int originalSpawns = tag.getInt("treasurechestitems:spawner_original_spawns").orElse(0);
         int nl = 0;
@@ -110,10 +107,7 @@ public class LoreUtils {
             if (rawText.isEmpty()) {
                 nl++;
                 if (nl == 2) {
-                    final Component newLine = Component.literal("Erscheinungen: ")
-                            .withColor(0xFFFFFF)
-                            .withStyle(style -> style.withItalic(false))
-                            .append(Component.literal(remainingSpawns + "/" + originalSpawns).withColor(0xFEEFAD));
+                    final Component newLine = Component.literal("Erscheinungen: ").withColor(0xFFFFFF).withStyle(style -> style.withItalic(false)).append(Component.literal(remainingSpawns + "/" + originalSpawns).withColor(0xFEEFAD));
                     lines.set((i + 1), newLine);
                     break;
                 }
@@ -121,6 +115,28 @@ public class LoreUtils {
         }
     }
 
+    public static Component formatSpawner(final CompoundTag tag) {
+        final int remainingSpawns = tag.getInt("treasurechestitems:spawner_spawns").orElse(0);
+        final int originalSpawns = tag.getInt("treasurechestitems:spawner_original_spawns").orElse(0);
+
+        return Component.literal("Erscheinungen: ")
+                .append(Component.literal(remainingSpawns + "/" + originalSpawns).withColor(0xFEEFAD));
+    }
+
+    /*
+    Sucht nach der angegebenen leeren Zeile um dort die Lore einzufügen (z.B.für das Auktionshaus)
+    Falls die Zeile nicht existiert wird die Lore einfach unten rangehängt.
+     */
+    public static int findEmptyLine(final List<Component> lore, final int emptyLines) {
+        final int search = IntStream.range(0, lore.size())
+                .filter(line -> lore.get(line).getString().isBlank())
+                .skip(emptyLines -1)
+                .findFirst()
+                .orElse(-1);
+        
+        return search != -1 ? search : lore.size();
+    }
+    
     public static MutableComponent spriteTexture(final String blockOrItem) {
         return ComponentSerialization.CODEC.parse(JsonOps.INSTANCE,
                 JsonParser.parseString("{\"sprite\":\"" + blockOrItem + "\"}"))
