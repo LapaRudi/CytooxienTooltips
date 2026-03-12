@@ -66,7 +66,8 @@ public class ItemTooltipListener {
                 final int emptyStorageLine = LoreUtils.findEmptyLine(lines, 3);
                 final int emptyGeneratorLine = LoreUtils.findEmptyLine(lines, 2);
                 final int emptySpawnerLine = LoreUtils.findEmptyLine(lines, 2) +1;
-                
+                final int emptyWateringCanLine = LoreUtils.findEmptyLine(lines, 2) +1;
+
                 if (id == 1001340 && itemStorage > 5000) {
                     lines.add(emptyStorageLine, LoreUtils.storageFormat(itemStorage, false));
                 
@@ -88,6 +89,13 @@ public class ItemTooltipListener {
 
                 } else if (specialItem.equals("spawner")) {
                     lines.set(emptySpawnerLine, LoreUtils.formatSpawner(bukkitCompound));
+
+                } else if (specialItem.equals("watering_can") || specialItem.equals("golden_watering_can")) {
+                    if (bukkitCompound.getInt("treasurechestitems:watering_can_wateruses").orElse(0) != 0) {
+                        if (!flag.isAdvanced()) {
+                            lines.add(emptyWateringCanLine, LoreUtils.formatWateringCan(bukkitCompound));
+                        }
+                    }
                 }
 
                 if (CytooxienTooltips.DEBUG) {
