@@ -1,14 +1,16 @@
 package de.laparudi.tooltips.registry;
 
+import de.laparudi.tooltips.util.LoreUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 public enum Event {
 
-    NEW_YEAR("Neujahr", 0xFF1E90FF, 0xFFFFD700),
-    VALENTINES_DAY("Valentinstag", 0xFFFF1493, 0xFFFFC0CB),
-    EASTER("Ostern", 0xFFFFB6C1, 0xFF98FB98),
-    SUMMER("Sommer", 0xFF7FFFD4, 0xFF00BFFF),
-    ANNIVERSARY("Jubiläum", 0xFFFFFF00, 0xFFF2F2F2),
+    NEW_YEAR("Neujahr", 0xFF1E90FF, 0xFFFF7100),
+    VALENTINES_DAY("Valentinstag", 0xFFFF007B, 0xFFFF23C8),
+    EASTER("Ostern", 0xFFC89F7F, 0xFF23C623),
+    SUMMER("Sommer", 0xFF32C6B7, 0xFF00BFFF),
+    ANNIVERSARY("Jubiläum", 0xFFC69B00, 0xFF95A59B),
     HALLOWEEN("Halloween", 0xFFFF6600, 0xFFA569BD),
     CHRISTMAS("Weihnachten", 0xFFDC143C, 0xFF3CB371),
     CHRISTMAS_ROD("Weihnachtsangel", 0xFFDC143C, 0xFF3CB371),
@@ -35,13 +37,15 @@ public enum Event {
     public int getSecondColor() {
         return secondColor;
     }
-
-    public Component getText() {
-        return Component.literal(this.getName()).withColor(this.getColor());
-    }
     
+    public Component getText() {
+        return LoreUtils.formatCustomTag(this.getName(), false).withColor(this.getColor());
+    }
+
     public Component getText(final int year) {
-        return Component.literal(this.getName()).withColor(this.getColor())
-                .append(Component.literal(" " + year).withColor(this.getSecondColor()));
+        MutableComponent nameTag = LoreUtils.formatCustomTag(this.getName(), false).withColor(this.getColor());
+        MutableComponent yearTag = LoreUtils.formatCustomTag(String.valueOf(year), true).withColor(this.getSecondColor());
+
+        return nameTag.append(Component.literal(" ")).append(yearTag);
     }
 }

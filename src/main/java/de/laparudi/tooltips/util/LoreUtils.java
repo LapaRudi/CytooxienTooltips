@@ -6,7 +6,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.network.chat.FontDescription;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -50,6 +52,42 @@ public class LoreUtils {
     private static String formatLong(final long input) {
         final NumberFormat format = NumberFormat.getNumberInstance(Locale.GERMANY);
         return format.format(input);
+    }
+
+    public static MutableComponent formatCustomTag(String input, boolean isNumeric) {
+        if (input == null || input.isEmpty()) return Component.empty();
+
+        String upperInput = input.toUpperCase(java.util.Locale.ROOT);
+
+        ResourceLocation textLoc = ResourceLocation.parse(isNumeric ? "cytooxien-tooltips:small_numbers" : "minecraft:small");
+        ResourceLocation bgLoc = ResourceLocation.parse("minecraft:tag");
+        FontDescription textFont = new FontDescription.Resource(textLoc);
+        FontDescription bgFont = new FontDescription.Resource(bgLoc);
+
+        StringBuilder bgBuilder = new StringBuilder();
+        int length = upperInput.length();
+
+        char lengthChar = (char) (0xE200 + (length - 1));
+        bgBuilder.append(lengthChar);
+        bgBuilder.append("\uE211");
+
+        for (int i = 0; i < length; i++) {
+            bgBuilder.append("\uE212");
+        }
+
+        StringBuilder fgBuilder = new StringBuilder();
+        for (char c : upperInput.toCharArray()) {
+            fgBuilder.append(c).append("\uE210");
+        }
+
+        return Component.literal(bgBuilder.toString())
+                .withStyle(style -> style.withFont(bgFont).withShadowColor(0))
+                .append(Component.literal(fgBuilder.toString())
+                        .withStyle(style -> style
+                                .withFont(textFont)
+                                .withColor(0xFFFFFF)
+                                .withShadowColor(0)
+                        ));
     }
 
     private static final Component split = Component.literal(" | ").withStyle(ChatFormatting.DARK_GRAY);
@@ -96,23 +134,6 @@ public class LoreUtils {
         final double price = venditor ? venditor(space) : itemStorage(space);
         final Component component = Component.literal("~" + formatDouble(price)).withColor(0xFFFBECAB);
         return Component.literal("Kosten: ").append(component);
-    }
-
-    public static void formatSpawnerAlternative(final List<Component> lines, final CompoundTag tag) {
-        final int remainingSpawns = tag.getInt("treasurechestitems:spawner_spawns").orElse(0);
-        final int originalSpawns = tag.getInt("treasurechestitems:spawner_original_spawns").orElse(0);
-        int nl = 0;
-        for (int i = 0; i < lines.size(); i++) {
-            final String rawText = lines.get(i).getString();
-            if (rawText.isEmpty()) {
-                nl++;
-                if (nl == 2) {
-                    final Component newLine = Component.literal("Erscheinungen: ").withColor(0xFFFFFF).withStyle(style -> style.withItalic(false)).append(Component.literal(remainingSpawns + "/" + originalSpawns).withColor(0xFEEFAD));
-                    lines.set((i + 1), newLine);
-                    break;
-                }
-            }
-        }
     }
 
     public static Component formatSpawner(final CompoundTag tag) {
