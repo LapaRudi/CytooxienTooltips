@@ -123,6 +123,13 @@ public class LoreUtils {
                 .append(Component.literal(remainingSpawns + "/" + originalSpawns).withColor(0xFEEFAD));
     }
 
+    public static Component formatWateringCan(final CompoundTag tag) {
+        final int uses = tag.getInt("treasurechestitems:watering_can_wateruses").orElse(0);
+
+        return Component.literal("Haltbarkeit: ")
+                .append(Component.literal(Integer.toString(uses)).withColor(0xFEEFAD));
+    }
+
     /*
     Sucht nach der angegebenen leeren Zeile um dort die Lore einzufügen (z.B.für das Auktionshaus)
     Falls die Zeile nicht existiert wird die Lore einfach unten rangehängt.
