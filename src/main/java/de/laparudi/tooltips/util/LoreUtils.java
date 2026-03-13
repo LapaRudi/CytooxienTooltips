@@ -1,5 +1,6 @@
 package de.laparudi.tooltips.util;
 
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.ChatFormatting;
@@ -148,6 +149,14 @@ public class LoreUtils {
     public static Component formatWateringCan(final int durability) {
         return Component.literal("Haltbarkeit: ")
                 .append(Component.literal(Integer.toString(durability)).withColor(0xFEEFAD));
+    }
+
+    public static List<Component> formatFishingTrophy(final CompoundTag tag) {
+        final long date = tag.getLong("treasurechestitems:fishing.fishing_cup_big_fish_contest_date").orElse(0L);
+        final String fish = tag.getString("treasurechestitems:fishing.fishing_cup_big_fish_contest_fish").orElse("");
+        final int points = tag.getInt("treasurechestitems:fishing.fishing_cup_big_fish_points_earned").orElse(0);
+
+        return List.of(formatCustomTag("Datum", false).withColor(0xFF3272D3), Component.literal(formatTimestamp(date)), formatCustomTag("Fisch", false).withColor(0xFF3272D3), Component.literal(fish), formatCustomTag("Punkte", false).withColor(0xFF3272D3), Component.literal(String.valueOf(points)));
     }
 
     /*
