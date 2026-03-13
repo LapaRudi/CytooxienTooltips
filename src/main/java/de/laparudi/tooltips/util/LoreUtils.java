@@ -155,8 +155,25 @@ public class LoreUtils {
         final long date = tag.getLong("treasurechestitems:fishing.fishing_cup_big_fish_contest_date").orElse(0L);
         final String fish = tag.getString("treasurechestitems:fishing.fishing_cup_big_fish_contest_fish").orElse("");
         final int points = tag.getInt("treasurechestitems:fishing.fishing_cup_big_fish_points_earned").orElse(0);
+        final String winnerJson = tag.getString("treasurechestitems:fishing.fishing_cup_big_fish_winner").orElse("");
 
-        return List.of(formatCustomTag("Datum", false).withColor(0xFF3272D3), Component.literal(formatTimestamp(date)), formatCustomTag("Fisch", false).withColor(0xFF3272D3), Component.literal(fish), formatCustomTag("Punkte", false).withColor(0xFF3272D3), Component.literal(String.valueOf(points)));
+        String player = "Unbekannt";
+        int playerColor = 0xFF9BA3AC;
+
+        if (!winnerJson.isEmpty()) {
+            try {
+                JsonObject obj = JsonParser.parseString(winnerJson).getAsJsonObject();
+                player = obj.get("text").getAsString();
+                if (obj.has("color")) {
+                    playerColor = Integer.parseInt(obj.get("color").getAsString().replace("#", ""), 16);
+                }
+            } catch (Exception ignored) {}
+        }
+        return List.of(formatCustomTag("Details", false).withColor(0xFF3272D3),
+                Component.literal("● Gewinner: ").append(Component.literal(player).withColor(playerColor)),
+                Component.literal("● Datum: ").append(Component.literal(formatTimestamp(date)).withColor(0xFFFBECAB)),
+                Component.literal("● Fisch: ").append(Component.literal(fish).withColor(0xFFFBECAB)),
+                Component.literal("● Punkte: ").append(Component.literal(String.valueOf(points)).withColor(0xFFFBECAB)));
     }
 
     /*

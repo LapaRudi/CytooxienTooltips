@@ -67,7 +67,7 @@ public class ItemTooltipListener {
                 final int emptyGeneratorLine = LoreUtils.findEmptyLine(lines, 2);
                 final int emptySpawnerLine = LoreUtils.findEmptyLine(lines, 2) +1;
                 final int emptyWateringCanLine = LoreUtils.findEmptyLine(lines, 2) +1;
-                final int emptyformatFishingTrophyLine = LoreUtils.findEmptyLine(lines, 3);
+                final int emptyformatFishingTrophyLine = LoreUtils.findEmptyLine(lines, 2) +1;
 
                 if (id == 1001340 && itemStorage > 5000) {
                     lines.add(emptyStorageLine, LoreUtils.storageFormat(itemStorage, false));
@@ -100,6 +100,8 @@ public class ItemTooltipListener {
                     }
 
                 } else if (specialItem.equals("fishing.fishing_cup_big_fish")) {
+                    lines.remove(emptyformatFishingTrophyLine + 1);
+                    lines.remove(emptyformatFishingTrophyLine);
                     lines.addAll(emptyformatFishingTrophyLine, LoreUtils.formatFishingTrophy(bukkitCompound));
 
                 }
