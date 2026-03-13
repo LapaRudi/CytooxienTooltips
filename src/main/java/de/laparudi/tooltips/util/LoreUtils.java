@@ -170,10 +170,10 @@ public class LoreUtils {
             } catch (Exception ignored) {}
         }
         return List.of(formatCustomTag("Details", false).withColor(0xFF3272D3),
-                Component.literal("● Gewinner: ").append(Component.literal(player).withColor(playerColor)),
-                Component.literal("● Datum: ").append(Component.literal(formatTimestamp(date)).withColor(0xFFFBECAB)),
-                Component.literal("● Fisch: ").append(Component.literal(fish).withColor(0xFFFBECAB)),
-                Component.literal("● Punkte: ").append(Component.literal(String.valueOf(points)).withColor(0xFFFBECAB)));
+                Component.literal(" ● Gewinner: ").append(Component.literal(player).withColor(playerColor)),
+                Component.literal(" ● Datum: ").append(Component.literal(formatTimestamp(date)).withColor(0xFFFBECAB)),
+                Component.literal(" ● Fisch: ").append(Component.literal(fish).withColor(0xFFFBECAB)),
+                Component.literal(" ● Punkte: ").append(Component.literal(String.valueOf(points)).withColor(0xFFFBECAB)));
     }
 
     /*
