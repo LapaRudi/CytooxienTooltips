@@ -1,5 +1,6 @@
 package de.laparudi.tooltips.util;
 
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.ChatFormatting;
@@ -148,6 +149,56 @@ public class LoreUtils {
     public static Component formatWateringCan(final int durability) {
         return Component.literal("Haltbarkeit: ")
                 .append(Component.literal(Integer.toString(durability)).withColor(0xFEEFAD));
+    }
+
+    private static String translateFish(final String input) {
+        return switch (input) {
+            case "gold_fish" -> "Goldfisch";
+            case "sweetfish" -> "Ayu";
+            case "anchovy" -> "Sardelle";
+            case "guppy" -> "Guppy";
+            case "olive_flounder" -> "Olivenflunder";
+            case "sea_bass" -> "Seebarsch";
+            case "red_snapper" -> "Roter Schnapper";
+            case "tuna" -> "Thunfisch";
+            case "surgeon_fish" -> "Doktorfisch";
+            case "piranha_fish" -> "Piranha";
+            case "nibble_fish" -> "Saugbarbe";
+            case "jellyfish" -> "Qualle";
+            case "blob_fish" -> "Blobfisch";
+            case "ray" -> "Rochen";
+            case "electric_eel" -> "Zitteraal";
+            case "ocean_sun_fish" -> "Mondfisch";
+            case "sea_horse" -> "Seepferdchen";
+            case "napoleonfish" -> "Napoleonfisch";
+            default -> input;
+        };
+    }
+    
+    public static List<Component> formatFishingTrophy(final CompoundTag tag) {
+        final long date = tag.getLong("treasurechestitems:fishing.fishing_cup_big_fish_contest_date").orElse(0L);
+        final String fish = tag.getString("treasurechestitems:fishing.fishing_cup_big_fish_contest_fish").orElse("");
+        final int points = tag.getInt("treasurechestitems:fishing.fishing_cup_big_fish_points_earned").orElse(0);
+        final String winnerJson = tag.getString("treasurechestitems:fishing.fishing_cup_big_fish_winner").orElse("");
+
+        String player = "Unbekannt";
+        int playerColor = 0xFF9BA3AC;
+
+        if (!winnerJson.isEmpty()) {
+            try {
+                JsonObject obj = JsonParser.parseString(winnerJson).getAsJsonObject();
+                player = obj.get("text").getAsString();
+                if (obj.has("color")) {
+                    playerColor = Integer.parseInt(obj.get("color").getAsString().replace("#", ""), 16);
+                }
+            } catch (Exception ignored) {}
+        }
+        
+        return List.of(formatCustomTag("Details", false).withColor(0xFF3272D3),
+                Component.literal(" ● Gewinner: ").append(Component.literal(player).withColor(playerColor)),
+                Component.literal(" ● Datum: ").append(Component.literal(formatTimestamp(date)).withColor(0xFFFBECAB)),
+                Component.literal(" ● Fisch: ").append(Component.literal(translateFish(fish)).withColor(0xFFFBECAB)),
+                Component.literal(" ● Punkte: ").append(Component.literal(String.valueOf(points)).withColor(0xFFFBECAB)));
     }
 
     /*
