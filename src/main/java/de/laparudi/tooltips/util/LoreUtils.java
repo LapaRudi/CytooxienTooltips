@@ -1,5 +1,6 @@
 package de.laparudi.tooltips.util;
 
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.ChatFormatting;
@@ -116,6 +117,7 @@ public class LoreUtils {
     }
 
     public static int turnipLoreSize(final CompoundTag tag) {
+        if (tag.getLong("treasurechestitems:turnip_4_harvesttime").orElse(0L) == 0L) return -1; 
         int size = 6;
 
         if (tag.getDouble("treasurechestitems:turnip_4_weight").orElse(0.0) > 1) size += 3;
@@ -142,6 +144,36 @@ public class LoreUtils {
 
         return Component.literal("Erscheinungen: ")
                 .append(Component.literal(remainingSpawns + "/" + originalSpawns).withColor(0xFEEFAD));
+    }
+
+    public static Component formatWateringCan(final int durability) {
+        return Component.literal("Haltbarkeit: ")
+                .append(Component.literal(Integer.toString(durability)).withColor(0xFEEFAD));
+    }
+
+    public static List<Component> formatFishingTrophy(final CompoundTag tag) {
+        final long date = tag.getLong("treasurechestitems:fishing.fishing_cup_big_fish_contest_date").orElse(0L);
+        final String fish = tag.getString("treasurechestitems:fishing.fishing_cup_big_fish_contest_fish").orElse("");
+        final int points = tag.getInt("treasurechestitems:fishing.fishing_cup_big_fish_points_earned").orElse(0);
+        final String winnerJson = tag.getString("treasurechestitems:fishing.fishing_cup_big_fish_winner").orElse("");
+
+        String player = "Unbekannt";
+        int playerColor = 0xFF9BA3AC;
+
+        if (!winnerJson.isEmpty()) {
+            try {
+                JsonObject obj = JsonParser.parseString(winnerJson).getAsJsonObject();
+                player = obj.get("text").getAsString();
+                if (obj.has("color")) {
+                    playerColor = Integer.parseInt(obj.get("color").getAsString().replace("#", ""), 16);
+                }
+            } catch (Exception ignored) {}
+        }
+        return List.of(formatCustomTag("Details", false).withColor(0xFF3272D3),
+                Component.literal(" ● Gewinner: ").append(Component.literal(player).withColor(playerColor)),
+                Component.literal(" ● Datum: ").append(Component.literal(formatTimestamp(date)).withColor(0xFFFBECAB)),
+                Component.literal(" ● Fisch: ").append(Component.literal(fish).withColor(0xFFFBECAB)),
+                Component.literal(" ● Punkte: ").append(Component.literal(String.valueOf(points)).withColor(0xFFFBECAB)));
     }
 
     /*

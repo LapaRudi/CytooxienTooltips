@@ -66,7 +66,9 @@ public class ItemTooltipListener {
                 final int emptyStorageLine = LoreUtils.findEmptyLine(lines, 3);
                 final int emptyGeneratorLine = LoreUtils.findEmptyLine(lines, 2);
                 final int emptySpawnerLine = LoreUtils.findEmptyLine(lines, 2) +1;
-                
+                final int emptyWateringCanLine = LoreUtils.findEmptyLine(lines, 2) +1;
+                final int emptyformatFishingTrophyLine = LoreUtils.findEmptyLine(lines, 2) +1;
+
                 if (id == 1001340 && itemStorage > 5000) {
                     lines.add(emptyStorageLine, LoreUtils.storageFormat(itemStorage, false));
                 
@@ -76,6 +78,7 @@ public class ItemTooltipListener {
                 } else if ( (id >= 1100979 && id <= 1100988) || (id >= 1100998 && id <= 1101002) ) {
                     final int line = LoreUtils.turnipLoreSize(bukkitCompound);
                     final List<Component> list = LoreUtils.turnipFormat(turnipTimestamp);
+                    if (line == -1) break customData;
                     
                     try {
                         lines.addAll(line, list);
@@ -88,6 +91,19 @@ public class ItemTooltipListener {
 
                 } else if (specialItem.equals("spawner")) {
                     lines.set(emptySpawnerLine, LoreUtils.formatSpawner(bukkitCompound));
+
+                } else if (specialItem.equals("watering_can") || specialItem.equals("golden_watering_can")) {
+                    final int durability = bukkitCompound.getInt("treasurechestitems:" + specialItem + "_wateruses").orElse(0);
+                    
+                    if (durability != 0 && !flag.isAdvanced()) {
+                        lines.add(emptyWateringCanLine, LoreUtils.formatWateringCan(durability));
+                    }
+
+                } else if (specialItem.equals("fishing.fishing_cup_big_fish")) {
+                    lines.remove(emptyformatFishingTrophyLine + 1);
+                    lines.remove(emptyformatFishingTrophyLine);
+                    lines.addAll(emptyformatFishingTrophyLine, LoreUtils.formatFishingTrophy(bukkitCompound));
+
                 }
 
                 if (CytooxienTooltips.DEBUG) {
