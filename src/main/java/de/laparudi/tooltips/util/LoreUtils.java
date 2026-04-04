@@ -143,8 +143,14 @@ public class LoreUtils {
         );
     }
 
-    public static Component storageFormat(final long space, final boolean venditor) {
-        final double price = venditor ? venditor(space) : itemStorage(space);
+    public static Component storageFormat(final long space, final String type) {
+        final double price = switch (type) {
+            case "item_storage" -> itemStorage(space);
+            case "venditor" -> venditor(space);
+            case "storage_chest" -> storageChest((int) space);
+            default -> -1.0;
+        };
+        
         final Component component = Component.literal("~" + formatDouble(price)).withColor(0xFFFBECAB);
         return Component.literal(Language.get("upgrade.costs") + ": ").append(component);
     }
@@ -237,5 +243,17 @@ public class LoreUtils {
                 - 256.41 * log
                 + 152.8
                 - 0.00092 * upgrades;
+    }
+
+    public static double storageChest(final int pages) {
+        if (pages < 20) return 0.0;
+        
+        double sqrt = pages * Math.sqrt(pages);
+        double log = Math.log(pages);
+
+        return 167.944 * sqrt
+                + 5.4685 * pages * log
+                + 504.347 * pages
+                - 2123.58;
     }
 }

@@ -106,7 +106,7 @@ public class Registry {
         register(1101123, Event.VALENTINES_DAY, 2026); // Balancierender-Creeper-Statue
         
         // Ostern 2026
-        registerMulti(1101154, 10, Event.EASTER, 2026); // Eier
+        registerMulti(1101154, 9, Event.EASTER, 2026); // Eier
         register(1101166, Event.EASTER, 2026); // Löwenzahnhut
     }
     

@@ -41,8 +41,10 @@ public class ItemTooltipListener {
 
             if (id != -1) {
                 final Component lore = Registry.getLore(id, item);
-                if (lore != null && lines.size() > 1) {
-                    final int exclusiveLine = isRegistered(itemStack) ? 2 : 1;
+                final int exclusiveLine = isRegistered(itemStack) ? 2 : 1;
+                final String exclusiveTagString = "E\uE210X\uE210K\uE210L\uE210U\uE210S\uE210I\uE210V";
+                
+                if (lore != null && lines.size() > 1 && lines.get(exclusiveLine).getString().contains(exclusiveTagString)) {
                     final MutableComponent current = lines.get(exclusiveLine).copy();
                     lines.set(exclusiveLine, current.append(Component.literal(" ")).append(lore));
                 }
@@ -61,6 +63,7 @@ public class ItemTooltipListener {
                 
                 final long itemStorage = bukkitCompound.getLong("treasurechestitems:skyblockx.item_storage_storage").orElse(0L);
                 final long venditor = bukkitCompound.getLong("treasurechestitems:skyblockx.venditorplus_storage").orElse(0L);
+                final int storageChest = bukkitCompound.getInt("treasurechestitems:specialitems.storage_chest_pages").orElse(0);
                 final long turnipTimestamp = bukkitCompound.getLong("treasurechestitems:turnip_4_harvesttime").orElse(0L);
                 final String specialItem = bukkitCompound.getString("treasurechestitems:special_item").orElse("");
 
@@ -71,10 +74,13 @@ public class ItemTooltipListener {
                 final int emptyGeneratorLine = LoreUtils.findEmptyLine(lines, 2);
                 
                 if (id == 1001340 && itemStorage > 5000) {
-                    lines.add(emptyStorageLine, LoreUtils.storageFormat(itemStorage, false));
+                    lines.add(emptyStorageLine, LoreUtils.storageFormat(itemStorage, "item_storage"));
                 
                 } else if (id == 1007012 && lines.size() > 4 && venditor > 5000) {
-                    lines.add(emptyStorageLine, LoreUtils.storageFormat(venditor, true));
+                    lines.add(emptyStorageLine, LoreUtils.storageFormat(venditor, "venditor"));
+                
+                } else if (id == 1101034 && storageChest >= 20) {
+                    lines.add(emptyStorageLine, LoreUtils.storageFormat(storageChest, "storage_chest"));
                     
                 } else if ( (id >= 1100979 && id <= 1100988) || (id >= 1100998 && id <= 1101002) ) {
                     final int line = LoreUtils.turnipLoreSize(bukkitCompound);
