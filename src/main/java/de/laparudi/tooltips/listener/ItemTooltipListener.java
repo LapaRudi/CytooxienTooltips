@@ -5,6 +5,7 @@ import de.laparudi.tooltips.Language;
 import de.laparudi.tooltips.exclusive.Registry;
 import de.laparudi.tooltips.util.LoreUtils;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -42,9 +43,8 @@ public class ItemTooltipListener {
             if (id != -1) {
                 final Component lore = Registry.getLore(id, item);
                 final int exclusiveLine = isRegistered(itemStack) ? 2 : 1;
-                final String exclusiveTagString = "E\uE210X\uE210K\uE210L\uE210U\uE210S\uE210I\uE210V";
-                
-                if (lore != null && lines.size() > 1 && lines.get(exclusiveLine).getString().contains(exclusiveTagString)) {
+
+                if (lore != null && lines.size() > 1 && lines.get(exclusiveLine).getString().contains("\uE210")) {
                     final MutableComponent current = lines.get(exclusiveLine).copy();
                     lines.set(exclusiveLine, current.append(Component.literal(" ")).append(lore));
                 }
@@ -93,10 +93,10 @@ public class ItemTooltipListener {
                         lines.addAll(list);
                     }
 
-                } else if (id == 1100957 || id == 1100958 || id == 1100959) {
+                } else if (id == 1100957 || id == 1100958 || id == 1100959 && lines.stream().anyMatch(line -> line.getString().contains("|"))) {
                     lines.addAll(emptyGeneratorLine, LoreUtils.generatorFormat(bukkitCompound));
 
-                } else if (specialItem.equals("spawner")) {
+                } else if (specialItem.equals("spawner") && lines.stream().anyMatch(line -> line.getString().contains("▬"))) {
                     lines.set(defaultEmptyLine, LoreUtils.formatSpawner(bukkitCompound));
 
                 } else if (specialItem.equals("watering_can") || specialItem.equals("golden_watering_can")) {
