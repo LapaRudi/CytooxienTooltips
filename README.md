@@ -7,7 +7,7 @@
 <br>
 <br>
 <br>
-**Upgrade-Preisschätzung von Itemlagern und Venditoren:**<br>
+**Upgrade-Preisschätzung von Itemlagern, Venditoren und Lagertruhen:**<br>
 (Ab 5000 Kapazität / Preise sind nicht 100% genau und können abweichen)<br>
 <br>
 <img width="532" height="244" alt="image" src="https://github.com/user-attachments/assets/8e2acf27-a5aa-4c78-9cd2-16f74e67ee3d" /><img width="396" height="267" alt="image" src="https://github.com/user-attachments/assets/296fb5e3-2650-4213-bf68-0ccc0e0811d1" />
