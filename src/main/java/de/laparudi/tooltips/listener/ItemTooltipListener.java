@@ -5,7 +5,6 @@ import de.laparudi.tooltips.Language;
 import de.laparudi.tooltips.exclusive.Registry;
 import de.laparudi.tooltips.util.LoreUtils;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -114,9 +113,13 @@ public class ItemTooltipListener {
                     }
 
                 } else if (specialItem.equals("fishing.fishing_cup_big_fish")) {
-                    lines.remove(defaultEmptyLine + 1);
-                    lines.remove(defaultEmptyLine);
-                    lines.addAll(defaultEmptyLine, LoreUtils.formatFishingTrophy(bukkitCompound));
+                    final List<Component> trophyLore = LoreUtils.formatFishingTrophy(bukkitCompound);
+                    
+                    if (trophyLore != null) {
+                        lines.remove(defaultEmptyLine + 1);
+                        lines.remove(defaultEmptyLine);
+                        lines.addAll(defaultEmptyLine, trophyLore);
+                    }
                 }
 
                 if (CytooxienTooltips.debug) {

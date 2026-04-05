@@ -178,11 +178,16 @@ public class LoreUtils {
         int playerColor = 0xFF9BA3AC;
 
         if (!winnerJson.isEmpty()) {
-            final JsonObject obj = JsonParser.parseString(winnerJson).getAsJsonObject();
-            player = obj.get("text").getAsString();
-            
-            if (obj.has("color")) {
-                playerColor = Integer.parseInt(obj.get("color").getAsString().replace("#", ""), 16);
+            try {
+                final JsonObject obj = JsonParser.parseString(winnerJson).getAsJsonObject();
+                player = obj.get("text").getAsString();
+
+                if (obj.has("color")) {
+                    playerColor = Integer.parseInt(obj.get("color").getAsString().replace("#", ""), 16);
+                }
+                
+            } catch (final IllegalStateException exception) {
+                return null;
             }
         }
         
