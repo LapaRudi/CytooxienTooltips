@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import de.laparudi.tooltips.CytooxienTooltips;
 import de.laparudi.tooltips.Language;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.network.chat.Component;
 
@@ -13,7 +13,7 @@ public class KeyBindListener {
     private static KeyMapping debugToggleKey;
 
     public static void register() {
-        debugToggleKey = KeyBindingHelper.registerKeyBinding(new KeyMapping("CXN-Tooltips Debug",  InputConstants.UNKNOWN.getValue(), KeyMapping.Category.MISC));
+        debugToggleKey = KeyMappingHelper.registerKeyMapping(new KeyMapping("CXN-Tooltips Debug",  InputConstants.UNKNOWN.getValue(), KeyMapping.Category.MISC));
         
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null) return;
@@ -21,9 +21,9 @@ public class KeyBindListener {
             if (debugToggleKey.consumeClick()) {
                 CytooxienTooltips.toggleDebug();
                 
-                client.player.displayClientMessage(Component.literal("[CXN Tooltips] " + Language.get("debug.display") + ": ").append(CytooxienTooltips.debug
+                client.player.sendOverlayMessage(Component.literal("[CXN Tooltips] " + Language.get("debug.display") + ": ").append(CytooxienTooltips.debug
                         ? Component.literal(Language.get("debug.on")).withColor(0xFF00FF00)
-                        : Component.literal(Language.get("debug.off")).withColor(0xFFFF0000)), true);
+                        : Component.literal(Language.get("debug.off")).withColor(0xFFFF0000)));
             }
         });
     }

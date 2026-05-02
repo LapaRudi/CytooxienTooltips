@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.chat.FontDescription;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.text.NumberFormat;
 import java.time.*;
@@ -62,8 +62,8 @@ public class LoreUtils {
         if (input == null || input.isEmpty()) return Component.empty();
         final String upperInput = input.toUpperCase(Language.getLocale());
 
-        final ResourceLocation textLoc = ResourceLocation.parse(isNumeric ? "cytooxien-tooltips:small_numbers" : "minecraft:small");
-        final ResourceLocation bgLoc = ResourceLocation.parse("minecraft:tag");
+        final Identifier textLoc = Identifier.parse(isNumeric ? "cytooxien-tooltips:small_numbers" : "minecraft:small");
+        final Identifier bgLoc = Identifier.parse("minecraft:tag");
         final FontDescription textFont = new FontDescription.Resource(textLoc);
         final FontDescription bgFont = new FontDescription.Resource(bgLoc);
 
@@ -73,7 +73,7 @@ public class LoreUtils {
         final char lengthChar = (char) (0xE200 + (length - 1));
         bgBuilder.append(lengthChar);
         bgBuilder.append("\uE211");
-        bgBuilder.append("\uE212".repeat(length));
+        bgBuilder.repeat("\uE212", length);
 
         final StringBuilder fgBuilder = new StringBuilder();
         for (char c : upperInput.toCharArray()) {
