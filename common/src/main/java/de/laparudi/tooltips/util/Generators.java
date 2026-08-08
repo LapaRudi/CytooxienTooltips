@@ -98,14 +98,6 @@ public class Generators {
         return tag.getString("treasurechestitems:cobblegenerator_type").orElse(null);
     }
     
-    public static int blockLevel(final CompoundTag tag, final String block) {
-        final String type = generatorType(tag);
-        final CompoundTag levelsTag = tag.getCompound("treasurechestitems:cobblegenerator_levels").orElse(null);
-        if (type == null || levelsTag == null) return 0;
-        
-        return levelsTag.getInt(block.toUpperCase()).orElse(0);
-    }
-    
     public static double generatorPrice(final CompoundTag tag) {
         final String type = generatorType(tag);
         final CompoundTag levelsTag = tag.getCompound("treasurechestitems:cobblegenerator_levels").orElse(null);
