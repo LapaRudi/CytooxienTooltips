@@ -39,6 +39,8 @@ public class Language {
     
     public static String get(final String key) {
         final String defaultTranslation = translations.get("en_us").get(key);
+        if (defaultTranslation == null) return key;
+
         final String translation = translations.get(current).get(key);
         return (translation == null || translation.isBlank()) ? defaultTranslation : translation;
     }

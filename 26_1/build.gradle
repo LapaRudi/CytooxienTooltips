@@ -1,0 +1,36 @@
+plugins {
+    id 'net.fabricmc.fabric-loom'
+}
+
+sourceSets {
+    main {
+        java.srcDirs += files("../common/src/main/java")
+        resources.srcDirs += files("../common/src/main/resources")
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+    filesMatching("fabric.mod.json") {
+        expand "version": rootProject.mod_version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 25
+}
+
+tasks.named('jar') {
+    archiveFileName = "${project.archives_base_name}-${rootProject.mod_version}+${minecraft_version}.jar"
+}
+
+test {
+    enabled = false
+}

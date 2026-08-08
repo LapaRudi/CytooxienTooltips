@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "cytooxien-tooltips",
+	"version": "${version}",
+	"name": "Cytooxien Tooltips",
+	"description": "Erweiterte Item-Beschreibungen auf Cytooxien",
+	"authors": [
+		"LapaRudi"
+	],
+	"contributors": [
+		"Harold_Sensemann"
+	],
+	"contact": {
+		"homepage": "https://cytooxien.de/",
+		"sources": "https://github.com/LapaRudi/CytooxienTooltips"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/cytooxien-tooltips/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"de.laparudi.tooltips.CytooxienTooltips"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~26.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

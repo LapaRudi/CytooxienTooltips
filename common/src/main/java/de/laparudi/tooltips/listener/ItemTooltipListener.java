@@ -71,7 +71,6 @@ public class ItemTooltipListener {
                 
                 final int emptyStorageLine = LoreUtils.findEmptyLine(lines, 3);
                 final int emptyGeneratorLine = LoreUtils.findEmptyLine(lines, 2);
-                final int emptySpawnerLine = LoreUtils.findEmptyLine(lines, 1) +1;
                 
                 if (id == 1001340 && itemStorage > 5000) {
                     lines.add(emptyStorageLine, LoreUtils.storageFormat(itemStorage, "item_storage"));
@@ -96,8 +95,13 @@ public class ItemTooltipListener {
                 } else if (id == 1100957 || id == 1100958 || id == 1100959 && lines.stream().anyMatch(line -> line.getString().contains("|"))) {
                     lines.addAll(emptyGeneratorLine, LoreUtils.generatorFormat(bukkitCompound));
 
-                } else if (specialItem.equals("spawner") && lines.stream().anyMatch(line -> line.getString().contains("▬"))) {
-                    lines.set(emptySpawnerLine, LoreUtils.formatSpawner(bukkitCompound));
+                } else if (specialItem.equals("spawner")) {
+                    final int capacity = bukkitCompound.getInt("treasurechestitems:spawner_original_spawns").orElse(-1);
+                    final int capacityLine = LoreUtils.findLineByIntValue(lines, capacity);
+
+                    if (capacityLine != -1) {
+                        lines.set(capacityLine, LoreUtils.formatSpawner(bukkitCompound));
+                    }
 
                 } else if (specialItem.equals("watering_can") || specialItem.equals("golden_watering_can")) {
                     final int durability = bukkitCompound.getInt("treasurechestitems:" + specialItem + "_wateruses").orElse(0);

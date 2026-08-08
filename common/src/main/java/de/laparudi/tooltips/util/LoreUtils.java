@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 import de.laparudi.tooltips.Language;
-import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
@@ -13,7 +12,10 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 
 import java.text.NumberFormat;
-import java.time.*;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
@@ -90,22 +92,8 @@ public class LoreUtils {
                         ));
     }
 
-    private static final Component split = Component.literal(" | ").withStyle(ChatFormatting.DARK_GRAY);
-
     public static List<Component> generatorFormat(final CompoundTag tag) {
         final List<Component> lore = new ArrayList<>();
-
-        if (Generators.generatorType(tag).equals("nether")) {
-            final int soulSoilLevel = Generators.blockLevel(tag, "soul_soil");
-            final int soulSandLevel = Generators.blockLevel(tag, "soul_sand");
-            final int glowstoneLevel = Generators.blockLevel(tag, "glowstone");
-
-            lore.add(Component.literal(" ")
-                    .append(blockLevelComponent("soul_soil", soulSoilLevel)).append(split)
-                    .append(blockLevelComponent("soul_sand", soulSandLevel)).append(split)
-                    .append(blockLevelComponent("glowstone", glowstoneLevel)));
-        }
-
         final double price = Generators.generatorPrice(tag);
         final long blocks = Generators.generatorBlocks(tag);
         if (blocks == 0) return lore;
@@ -207,17 +195,20 @@ public class LoreUtils {
         
         return search != -1 ? search : lore.size();
     }
+
+    public static int findLineByIntValue(final List<Component> lore, final int value) {
+         return IntStream.range(0, lore.size())
+                 .filter(line -> lore.get(line).getString().contains(String.valueOf(value)))
+                 .findFirst()
+                 .orElse(-1);
+    }
     
     public static MutableComponent spriteTexture(final String blockOrItem) {
         return ComponentSerialization.CODEC.parse(JsonOps.INSTANCE,
                 JsonParser.parseString("{\"sprite\":\"" + blockOrItem + "\"}"))
                 .getOrThrow().copy();
     }
-    
-    private static MutableComponent blockLevelComponent(final String block, final int level) {
-        return spriteTexture("block/" + block).append(Component.literal(" " + (level + 1)));
-    }
-    
+
     public static double itemStorage(final long space) {
         final long upgrades = (space - 640) / 64;
         if (upgrades <= 0) return 0.0;

@@ -19,7 +19,7 @@
   "model_data.name": "Model Data",
   "upgrade.costs": "Upgrade Costs",
   "generator.broken_blocks": "Mined Blocks",
-  "spawner.spawns": "Spawns",
+  "spawner.spawns": "Capacity",
   
   "turnip.age": "Age",
   "turnip.harvested": "Harvested on",

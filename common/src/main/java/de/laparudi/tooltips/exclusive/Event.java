@@ -10,7 +10,7 @@ public enum Event {
     NEW_YEAR("event.new_year", 0xFF1E90FF, 0xFFFF7100),
     VALENTINES_DAY("event.valentines_day", 0xFFFF007B, 0xFFFF23C8),
     EASTER("event.easter", 0xFFC89F7F, 0xFF23C623),
-    SUMMER("event.summer", 0xFF32C6B7, 0xFF00BFFF),
+    SUMMER("event.summer", 0xFF2DB2A4, 0xFF00ACEC),
     ANNIVERSARY("event.anniversary", 0xFFC69B00, 0xFF95A59B),
     HALLOWEEN("event.halloween", 0xFFFF6600, 0xFFA569BD),
     CHRISTMAS("event.christmas", 0xFFDC143C, 0xFF3CB371),

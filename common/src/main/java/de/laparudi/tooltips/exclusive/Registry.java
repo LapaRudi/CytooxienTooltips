@@ -1,12 +1,12 @@
 package de.laparudi.tooltips.exclusive;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Registry {
     
@@ -108,6 +108,10 @@ public class Registry {
         // Ostern 2026
         registerMulti(1101154, 9, Event.EASTER, 2026); // Eier
         register(1101166, Event.EASTER, 2026); // Löwenzahnhut
+
+        // Sommer 2026
+        registerMulti(1101216, 10, Event.SUMMER, 2026); // Zwerge
+        register(1101230, Event.SUMMER, 2026); // Burgerbrater-Mütze
     }
     
     private static void registerMulti(int startID, final int totalAmount, final Item item, final Event event, final int year) {
