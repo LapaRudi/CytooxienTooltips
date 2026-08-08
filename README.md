@@ -16,7 +16,7 @@
 <br>
 <br>
 **Upgrade-Preise & abgebaute Blöcke von Generatoren:**<br>
-(Zusätzliche Level-Anzeige für Seelenerde, Seelensand und Glowstone)<br>
+~(Zusätzliche Level-Anzeige für Seelenerde, Seelensand und Glowstone)~<br>
 <br>
 <img width="491" height="297" alt="image" src="https://github.com/user-attachments/assets/a3d87bdb-45e0-48ff-90a2-36f73cb4f301" /><img width="485" height="297" alt="image" src="https://github.com/user-attachments/assets/8856b29c-f246-4b05-83eb-18f49d9f929b" />
 <br>
@@ -33,7 +33,7 @@
 <br>
 **Genaue verbleibende Spawn-Anzahl von Spawnern:**<br>
 <br>
-<img width="488" height="245" alt="image" src="https://github.com/user-attachments/assets/4c710dcf-6f18-42fc-a58b-e71755a63b86" />
+<img width="767" height="549" alt="grafik" src="https://github.com/user-attachments/assets/7676ec81-6a35-4d42-85a4-f650737a57ed" />
 <br>
 <br>
 <br>
