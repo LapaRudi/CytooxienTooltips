@@ -23,7 +23,9 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class LoreUtils {
-    
+
+    private static final NumberFormat numberInstance = NumberFormat.getNumberInstance(Language.getLocale());
+
     private static String formatTimestamp(long timestamp) {
         final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT, FormatStyle.SHORT);
         final ZonedDateTime dateTime = Instant.ofEpochMilli(timestamp).atZone(ZoneId.systemDefault());
@@ -49,15 +51,10 @@ public class LoreUtils {
     }
 
     private static String formatDouble(final double input) {
-        final NumberFormat format = NumberFormat.getNumberInstance(Language.getLocale());
-        format.setMinimumFractionDigits(2);
-        format.setMaximumFractionDigits(2);
-        return format.format(input);
-    }
-
-    private static String formatLong(final long input) {
-        final NumberFormat format = NumberFormat.getNumberInstance(Language.getLocale());
-        return format.format(input);
+        final NumberFormat doubleInstance = NumberFormat.getNumberInstance(Language.getLocale());
+        doubleInstance.setMinimumFractionDigits(2);
+        doubleInstance.setMaximumFractionDigits(2);
+        return doubleInstance.format(input);
     }
 
     public static MutableComponent formatCustomTag(final String input, final boolean isNumeric) {
@@ -99,7 +96,7 @@ public class LoreUtils {
         if (blocks == 0) return lore;
 
         final Component priceComponent = Component.literal(formatDouble(price)).withColor(0xFFFBECAB);
-        final Component blocksComponent = Component.literal(formatLong(blocks)).withColor(0xFFFBECAB);
+        final Component blocksComponent = Component.literal(numberInstance.format(blocks)).withColor(0xFFFBECAB);
 
         lore.addAll(List.of(
                 Component.empty(),
@@ -155,7 +152,19 @@ public class LoreUtils {
         return Component.literal(Language.get("turnip.can.durability") + ": ")
                 .append(Component.literal(Integer.toString(durability)).withColor(0xFEEFAD));
     }
-    
+
+    // 
+    public static Component formatMoneyPouch(final CompoundTag tag) {
+        final int min = tag.getIntOr("treasurechestitems:money_pouch_min", 0);
+        final int max = tag.getIntOr("treasurechestitems:money_pouch_max", 0);
+
+        return Component.literal("(").withColor(0xFFD3D3D3)
+                .append(Component.literal(numberInstance.format(min)).withColor(0xFFFBECAB))
+                .append(Component.literal(" - ").withColor(0xFFD3D3D3))
+                .append(Component.literal(numberInstance.format(max)).withColor(0xFFFBECAB))
+                .append(Component.literal(")").withColor(0xFFD3D3D3));
+    }
+
     public static List<Component> formatFishingTrophy(final CompoundTag tag) {
         final long date = tag.getLong("treasurechestitems:fishing.fishing_cup_big_fish_contest_date").orElse(0L);
         final String fish = tag.getString("treasurechestitems:fishing.fishing_cup_big_fish_contest_fish").orElse("");

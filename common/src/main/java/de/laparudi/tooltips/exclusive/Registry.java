@@ -23,6 +23,7 @@ public class Registry {
         register(1100900, Event.COLLECTION); // Fischerboot
         register(1100712, Event.COLLECTION); // Draisine
         register(1101079, Event.COLLECTION); // Schneemann (Geschmolzen)
+        register(1101238, Event.COLLECTION); // Piratenfloß
         
         // Weihnachten 2022
         register(1001368, Items.LEATHER_HORSE_ARMOR, Event.CHRISTMAS, 2022); // Teddybär
@@ -61,7 +62,7 @@ public class Registry {
         
         // Ostern 2024
         registerMulti(1100407, 9, Event.EASTER, 2024); // Eier
-        register(1100255, Event.EASTER, 2024); // Rankenhut
+        register(1100427, Event.EASTER, 2024); // Rankenhut
         register(1100463, Event.EASTER, 2024); // Häschenfigur
         
         // Sommer 2024

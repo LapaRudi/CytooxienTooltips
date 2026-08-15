@@ -69,17 +69,17 @@ public class ItemTooltipListener {
                 // Watering Can, Fishing Trophy
                 final int defaultEmptyLine = LoreUtils.findEmptyLine(lines, 2) +1;
                 
-                final int emptyStorageLine = LoreUtils.findEmptyLine(lines, 3);
-                final int emptyGeneratorLine = LoreUtils.findEmptyLine(lines, 2);
+                final int thirdEmptyLine = LoreUtils.findEmptyLine(lines, 3);
+                final int secondEmptyLine = LoreUtils.findEmptyLine(lines, 2);
                 
                 if (id == 1001340 && itemStorage > 5000) {
-                    lines.add(emptyStorageLine, LoreUtils.storageFormat(itemStorage, "item_storage"));
+                    lines.add(thirdEmptyLine, LoreUtils.storageFormat(itemStorage, "item_storage"));
                 
                 } else if (id == 1007012 && lines.size() > 4 && venditor > 5000) {
-                    lines.add(emptyStorageLine, LoreUtils.storageFormat(venditor, "venditor"));
+                    lines.add(thirdEmptyLine, LoreUtils.storageFormat(venditor, "venditor"));
                 
                 } else if (id == 1101034 && storageChest >= 20) {
-                    lines.add(emptyStorageLine, LoreUtils.storageFormat(storageChest, "storage_chest"));
+                    lines.add(thirdEmptyLine, LoreUtils.storageFormat(storageChest, "storage_chest"));
                     
                 } else if ( (id >= 1100979 && id <= 1100988) || (id >= 1100998 && id <= 1101002) ) {
                     final int line = LoreUtils.turnipLoreSize(bukkitCompound);
@@ -93,7 +93,7 @@ public class ItemTooltipListener {
                     }
 
                 } else if (id == 1100957 || id == 1100958 || id == 1100959 && lines.stream().anyMatch(line -> line.getString().contains("|"))) {
-                    lines.addAll(emptyGeneratorLine, LoreUtils.generatorFormat(bukkitCompound));
+                    lines.addAll(secondEmptyLine, LoreUtils.generatorFormat(bukkitCompound));
 
                 } else if (specialItem.equals("spawner")) {
                     final int capacity = bukkitCompound.getInt("treasurechestitems:spawner_original_spawns").orElse(-1);
@@ -125,6 +125,9 @@ public class ItemTooltipListener {
                         lines.remove(defaultEmptyLine);
                         lines.addAll(defaultEmptyLine, trophyLore);
                     }
+
+                } else if (specialItem.equals("money_pouch")) {
+                    lines.add(secondEmptyLine, LoreUtils.formatMoneyPouch(bukkitCompound));
                 }
 
                 if (CytooxienTooltips.debug) {
