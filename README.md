@@ -41,3 +41,10 @@
 **Zusätzliche Angaben bei Angelpokalen:**<br>
 <br>
 <img width="456" height="365" alt="image" src="https://github.com/user-attachments/assets/6610b82d-f57f-47aa-b39a-6b80a0c9921c" />
+<br>
+<br>
+<br>
+<br>
+**Gewinnspanne von Münzbelohnungen:**<br>
+<br>
+<img width="805" height="311" alt="grafik" src="https://github.com/user-attachments/assets/c56bf5dd-dfc7-4562-9c88-be0c014aceab" />
