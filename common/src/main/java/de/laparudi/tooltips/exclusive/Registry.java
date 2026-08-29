@@ -24,6 +24,9 @@ public class Registry {
         register(1100712, Event.COLLECTION); // Draisine
         register(1101079, Event.COLLECTION); // Schneemann (Geschmolzen)
         register(1101238, Event.COLLECTION); // Piratenfloß
+
+        // Gamescom 2026
+        register(1101250, Event.GAMESCOM, 2026); // Gamescom Gaming Stuhl
         
         // Weihnachten 2022
         register(1001368, Items.LEATHER_HORSE_ARMOR, Event.CHRISTMAS, 2022); // Teddybär

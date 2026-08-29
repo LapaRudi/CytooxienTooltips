@@ -15,7 +15,8 @@ public enum Event {
     HALLOWEEN("event.halloween", 0xFFFF6600, 0xFFA569BD),
     CHRISTMAS("event.christmas", 0xFFDC143C, 0xFF3CB371),
     CHRISTMAS_ROD("event.christmas_rod", 0xFFDC143C, 0xFF3CB371),
-    COLLECTION("event.collection", 0xFFB080D0, 0);
+    COLLECTION("event.collection", 0xFFB080D0, 0),
+    GAMESCOM("event.gamescom", 0xFF48257F, 0xFF1E90C0);
     
     private final String key;
     private final int color;
