@@ -14,7 +14,7 @@
 		"homepage": "https://cytooxien.de/",
 		"sources": "https://github.com/LapaRudi/CytooxienTooltips"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/cytooxien-tooltips/icon.png",
 	"environment": "client",
 	"entrypoints": {

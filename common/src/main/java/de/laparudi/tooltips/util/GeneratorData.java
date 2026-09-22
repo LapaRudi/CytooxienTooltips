@@ -1,20 +1,19 @@
 package de.laparudi.tooltips.util;
 
-import it.unimi.dsi.fastutil.Pair;
-import net.minecraft.nbt.CompoundTag;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Generators {
+public class GeneratorData {
     
-    private static final Map<String, List<Double>> cobblePrices = new HashMap<>();
-    private static final Map<String, List<Double>> deepslatePrices = new HashMap<>();
-    private static final Map<String, List<Double>> netherPrices = new HashMap<>();
+    private static final @Getter Map<String, List<Double>> cobblePrices = new HashMap<>();
+    private static final @Getter Map<String, List<Double>> deepslatePrices = new HashMap<>();
+    private static final @Getter Map<String, List<Double>> netherPrices = new HashMap<>();
 
-    private static final List<Double> cobbleDelay = List.of(100.0, 350.0, 1200.0, 5500.0, 11000.0, 19600.0, 32000.0, 49000.0, 71400.0, 100000.0);
-    private static final List<Double> netherDeepslateDelay = List.of(200.0, 700.0, 2300.0, 5500.0, 11000.0, 19600.0, 32000.0, 49000.0, 71400.0, 100000.0);
+    private static final @Getter List<Double> cobbleDelay = List.of(100.0, 350.0, 1200.0, 5500.0, 11000.0, 19600.0, 32000.0, 49000.0, 71400.0, 100000.0);
+    private static final @Getter List<Double> netherDeepslateDelay = List.of(200.0, 700.0, 2300.0, 5500.0, 11000.0, 19600.0, 32000.0, 49000.0, 71400.0, 100000.0);
     
     private static final List<Double> cobbleDefault = List.of(400.0, 800.0, 1200.0, 3085.0, 3825.0, 4565.0, 5300.0, 6035.0, 6765.0, 7500.0);
     private static final List<Double> coal = List.of(200.0, 250.0, 350.0, 945.0, 1110.0, 1275.0, 1435.0, 1595.0, 1750.0, 1905.0, 2060.0, 2215.0, 2365.0, 2515.0, 2665.0, 2810.0, 2960.0, 3105.0, 3250.0, 3395.0, 3540.0, 3680.0, 3825.0, 3965.0, 4105.0, 4250.0, 4390.0, 4530.0, 4665.0, 4805.0, 4945.0, 5080.0, 5220.0, 5355.0, 5495.0, 5630.0, 5765.0, 5900.0, 6035.0, 6170.0, 6305.0, 6440.0, 6570.0, 6705.0, 6840.0, 6970.0, 7105.0, 7235.0, 7370.0, 7500.0);
@@ -42,7 +41,7 @@ public class Generators {
     private static final List<Double> gildedBlackstone = List.of(885.0, 1485.0, 2055.0, 2605.0, 3145.0, 3670.0, 4185.0, 4695.0, 5200.0, 5700.0, 6195.0, 6680.0, 7165.0, 7650.0, 8125.0, 8600.0, 9075.0, 9540.0, 10010.0, 10470.0, 10935.0, 11395.0, 11850.0, 12305.0, 12760.0, 13210.0, 13660.0, 14110.0, 14555.0, 15000.0);
     private static final List<Double> ancientDebris = List.of(83450.0, 141595.0, 193930.0, 242825.0, 289305.0, 333945.0, 377120.0, 419075.0, 459985.0, 500000.0);
 
-    static {
+    static  {
         cobblePrices.put("COAL_ORE", coal);
         cobblePrices.put("IRON_ORE", iron);
         cobblePrices.put("LAPIS_ORE", lapis);
@@ -75,41 +74,5 @@ public class Generators {
         netherPrices.put("SOUL_SOIL", netherDefault);
         netherPrices.put("SOUL_SAND", netherDefault);
         netherPrices.put("GLOWSTONE", netherDefault);
-    }
-    
-    private static double getBlockPrice(final String type, final String block, final int level) {
-        final Map<String, List<Double>> map = switch (type) {
-            case "default" -> cobblePrices;
-            case "deepslate" -> deepslatePrices;
-            case "nether" -> netherPrices;
-            default -> null;
-        };
-        
-        if (map == null) return 0.0;
-        return map.get(block).stream().limit(level).mapToDouble(Double::doubleValue).sum();
-    }
-    
-    private static double getDelayPrice(final boolean cobble, final int level) {
-        final List<Double> list = cobble ? cobbleDelay : netherDeepslateDelay;
-        return list.stream().limit(level).mapToDouble(Double::doubleValue).sum();
-    }
-    
-    public static String generatorType(final CompoundTag tag) {
-        return tag.getString("treasurechestitems:cobblegenerator_type").orElse(null);
-    }
-    
-    public static double generatorPrice(final CompoundTag tag) {
-        final String type = generatorType(tag);
-        final CompoundTag levelsTag = tag.getCompound("treasurechestitems:cobblegenerator_levels").orElse(null);
-        if (type == null || levelsTag == null) return 0.0;
-        
-        final int delayLevel = tag.getInt("treasurechestitems:cobblegenerator_baselevel").orElse(0);
-        final double delayPrice = getDelayPrice(type.equals("default"), delayLevel);
-        final List<Pair<String, Integer>> levels = levelsTag.keySet().stream().map(key -> Pair.of(key, levelsTag.getIntOr(key, 0))).toList();
-        return delayPrice + levels.stream().mapToDouble(pair -> getBlockPrice(type, pair.key(), pair.value())).sum();
-    }
-    
-    public static long generatorBlocks(final CompoundTag tag) {
-        return tag.getLong("treasurechestitems:cobblegenerator_count").orElse(0L);
     }
 }

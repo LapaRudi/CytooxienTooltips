@@ -11,3 +11,4 @@ pluginManagement {
 
 include("26_1")
 include("26_2")
+include("26_3")

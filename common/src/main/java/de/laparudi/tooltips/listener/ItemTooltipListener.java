@@ -60,9 +60,9 @@ public class ItemTooltipListener {
                 final CompoundTag bukkitCompound = bukkitTag.asCompound().orElse(null);
                 if (bukkitCompound == null) break customData;
                 
-                final long itemStorage = bukkitCompound.getLong("treasurechestitems:skyblockx.item_storage_storage").orElse(0L);
-                final long venditor = bukkitCompound.getLong("treasurechestitems:skyblockx.venditorplus_storage").orElse(0L);
-                final int storageChest = bukkitCompound.getInt("treasurechestitems:specialitems.storage_chest_pages").orElse(0);
+                final long itemStorageCapacity = bukkitCompound.getLong("treasurechestitems:skyblockx.item_storage_storage").orElse(0L);
+                final long venditorCapacity = bukkitCompound.getLong("treasurechestitems:skyblockx.venditorplus_storage").orElse(0L);
+                final int storageChestPages = bukkitCompound.getInt("treasurechestitems:specialitems.storage_chest_pages").orElse(0);
                 final long turnipTimestamp = bukkitCompound.getLong("treasurechestitems:turnip_4_harvesttime").orElse(0L);
                 final String specialItem = bukkitCompound.getString("treasurechestitems:special_item").orElse("");
 
@@ -72,15 +72,23 @@ public class ItemTooltipListener {
                 final int thirdEmptyLine = LoreUtils.findEmptyLine(lines, 3);
                 final int secondEmptyLine = LoreUtils.findEmptyLine(lines, 2);
                 
-                if (id == 1001340 && itemStorage > 5000) {
-                    lines.add(thirdEmptyLine, LoreUtils.storageFormat(itemStorage, "item_storage"));
+                if (id == 1001340 && itemStorageCapacity > 5000) {
+                    lines.add(thirdEmptyLine, LoreUtils.storageFormat(itemStorageCapacity, "item_storage"));
                 
-                } else if (id == 1007012 && lines.size() > 4 && venditor > 5000) {
-                    lines.add(thirdEmptyLine, LoreUtils.storageFormat(venditor, "venditor"));
+                } else if (id == 1007012 && lines.size() > 4 && venditorCapacity > 5000) {
+                    lines.add(thirdEmptyLine, LoreUtils.storageFormat(venditorCapacity, "venditor"));
                 
-                } else if (id == 1101034 && storageChest >= 20) {
-                    lines.add(thirdEmptyLine, LoreUtils.storageFormat(storageChest, "storage_chest"));
-                    
+                } else if (id == 1101034) {
+                    final int pagesLine = LoreUtils.findLineByIntValue(lines, storageChestPages);
+
+                    if (pagesLine != 0) {
+                        lines.set(pagesLine, LoreUtils.formatStorageChest(lines.get(pagesLine).copy(), storageChestPages));
+                    }
+
+                    if (storageChestPages >= 20) {
+                        lines.add(thirdEmptyLine, LoreUtils.storageFormat(storageChestPages, "storage_chest"));
+                    }
+
                 } else if ( (id >= 1100979 && id <= 1100988) || (id >= 1100998 && id <= 1101002) ) {
                     final int line = LoreUtils.turnipLoreSize(bukkitCompound);
                     final List<Component> list = LoreUtils.turnipFormat(turnipTimestamp);

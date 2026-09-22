@@ -24,9 +24,6 @@ public class Registry {
         register(1100712, Event.COLLECTION); // Draisine
         register(1101079, Event.COLLECTION); // Schneemann (Geschmolzen)
         register(1101238, Event.COLLECTION); // Piratenfloß
-
-        // Gamescom 2026
-        register(1101250, Event.GAMESCOM, 2026); // Gamescom Gaming Stuhl
         
         // Weihnachten 2022
         register(1001368, Items.LEATHER_HORSE_ARMOR, Event.CHRISTMAS, 2022); // Teddybär
@@ -49,7 +46,7 @@ public class Registry {
         // Sommer 2023
         register(1100222, Event.SUMMER, 2023); // Trinkkappe
         register(1100253, Event.SUMMER, 2023); // Sonnenbrillen-Hut
-        register(1100170, Items.LEATHER_HORSE_ARMOR, Event.SUMMER, 2023); // Boombox (Alternative: 1100056)
+        register(1100170, Items.LEATHER_HORSE_ARMOR, Event.SUMMER, 2023); // Boombox
         register(1100117, Items.LEATHER_HORSE_ARMOR, Event.SUMMER, 2023); // Flamingo Badetier
         registerMulti(1100127, 10, Items.LEATHER_HORSE_ARMOR, Event.SUMMER, 2023); // Zwerge
         
@@ -116,6 +113,13 @@ public class Registry {
         // Sommer 2026
         registerMulti(1101216, 10, Event.SUMMER, 2026); // Zwerge
         register(1101230, Event.SUMMER, 2026); // Burgerbrater-Mütze
+
+        // Gamescom 2026
+        register(1101250, Event.GAMESCOM, 2026); // Gamescom Gaming Stuhl
+
+        // Jubiläum 2026
+        registerMulti(1101260, 2, Event.ANNIVERSARY, 2026); // Kuchen, Hut
+        register(1101070, Items.PAPER, Event.ANNIVERSARY, 2026); // Ballon
     }
     
     private static void registerMulti(int startID, final int totalAmount, final Item item, final Event event, final int year) {

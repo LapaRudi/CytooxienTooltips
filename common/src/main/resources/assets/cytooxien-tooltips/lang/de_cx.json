@@ -19,7 +19,10 @@
   "model_data.name": "Modellidentifizierungsnummer",
   "upgrade.costs": "Investitionsaufwand",
   "generator.broken_blocks": "Anzahl der abgetragenen Blöcke",
+  "generator.level": "Level",
+  "generator.available_levels": "Verfügbare Level",
   "spawner.spawns": "Verbleibende Einheiten",
+  "storagechest.items": "Gegenstände",
 
   "turnip.age": "Reifegrad",
   "turnip.harvested": "Erntezeitpunkt",

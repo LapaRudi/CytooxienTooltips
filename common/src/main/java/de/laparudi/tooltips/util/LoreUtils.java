@@ -5,10 +5,7 @@ import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 import de.laparudi.tooltips.Language;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentSerialization;
-import net.minecraft.network.chat.FontDescription;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.*;
 import net.minecraft.resources.Identifier;
 
 import java.text.NumberFormat;
@@ -90,18 +87,23 @@ public class LoreUtils {
     }
 
     public static List<Component> generatorFormat(final CompoundTag tag) {
+        final Generator generator = new Generator(tag);
         final List<Component> lore = new ArrayList<>();
-        final double price = Generators.generatorPrice(tag);
-        final long blocks = Generators.generatorBlocks(tag);
-        if (blocks == 0) return lore;
+        if (generator.getBrokenBlocks() == 0) return lore;
 
-        final Component priceComponent = Component.literal(formatDouble(price)).withColor(0xFFFBECAB);
-        final Component blocksComponent = Component.literal(numberInstance.format(blocks)).withColor(0xFFFBECAB);
+        final String level = generator.getLevel() + "/" + generator.getMaxLevel();
+        final Component levelComponent = Component.literal(level).withColor(0xFFFBECAB);
+        final Component availableComponent = Component.literal(String.valueOf(generator.getAvailableLevels())).withColor(0xFFFBECAB);
+
+        final Component priceComponent = Component.literal(formatDouble(generator.getPrice())).withColor(0xFFFBECAB);
+        final Component blocksComponent = Component.literal(numberInstance.format(generator.getBrokenBlocks())).withColor(0xFFFBECAB);
 
         lore.addAll(List.of(
                 Component.empty(),
-                Component.literal(Language.get("upgrade.costs") + ": ").append(priceComponent),
-                Component.literal(Language.get("generator.broken_blocks") + ": ").append(blocksComponent))
+                Component.literal(Language.get("generator.level") + ": ").append(levelComponent),
+                Component.literal(Language.get("generator.available_levels") + ": ").append(availableComponent),
+                Component.literal(Language.get("generator.broken_blocks") + ": ").append(blocksComponent),
+                Component.literal(Language.get("upgrade.costs") + ": ").append(priceComponent))
         );
 
         return lore;
@@ -138,6 +140,18 @@ public class LoreUtils {
         
         final Component component = Component.literal("~" + formatDouble(price)).withColor(0xFFFBECAB);
         return Component.literal(Language.get("upgrade.costs") + ": ").append(component);
+    }
+
+    public static Component formatStorageChest(final MutableComponent currentLine, final int pages) {
+        final String count = numberInstance.format(pages * 1344L);
+        final String items = Language.get("storagechest.items");
+
+        final Component itemCount = Component.literal(" (").withColor(0xFFD3D3D3)
+                .append(Component.literal(count + " ").withColor(0xFFFBECAB))
+                .append(Component.literal(items).withColor(0xFFFFFFFF))
+                .append(Component.literal(")").withColor(0xFFD3D3D3));
+
+        return currentLine.append(itemCount);
     }
 
     public static Component formatSpawner(final CompoundTag tag) {

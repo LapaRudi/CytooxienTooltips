@@ -2,9 +2,11 @@ package de.laparudi.tooltips.exclusive;
 
 import de.laparudi.tooltips.Language;
 import de.laparudi.tooltips.util.LoreUtils;
+import lombok.Getter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
+@Getter
 public enum Event {
 
     NEW_YEAR("event.new_year", 0xFF1E90FF, 0xFFFF7100),
@@ -28,18 +30,6 @@ public enum Event {
         this.secondColor = secondColor;
     }
 
-    public String getKey() {
-        return key;
-    }
-    
-    public int getColor() {
-        return color;
-    }
-
-    public int getSecondColor() {
-        return secondColor;
-    }
-    
     public Component getText() {
         return LoreUtils.formatCustomTag(Language.get(this.getKey()), false).withColor(this.getColor());
     }

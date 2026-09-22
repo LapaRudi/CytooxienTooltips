@@ -19,7 +19,10 @@
   "model_data.name": "Modelldaten",
   "upgrade.costs": "Upgrade-Kosten",
   "generator.broken_blocks": "Abgebaute Blöcke",
-  "spawner.spawns": "Erscheinungen",
+  "generator.level": "Level",
+  "generator.available_levels": "Verfügbare Level",
+  "spawner.spawns": "Kapazität",
+  "storagechest.items": "Gegenstände",
 
   "turnip.age": "Alter",
   "turnip.harvested": "Geerntet am",
@@ -51,5 +54,7 @@
 
   "debug.display": "Debug-Modus",
   "debug.on": "AN",
-  "debug.off": "AUS"
+  "debug.off": "AUS",
+
+  "modmenu.descriptionTranslation.cytooxien-tooltips": "Erweiterte Item-Beschreibungen auf Cytooxien"
 }

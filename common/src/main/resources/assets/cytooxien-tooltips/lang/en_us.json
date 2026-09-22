@@ -20,7 +20,10 @@
   "model_data.name": "Model Data",
   "upgrade.costs": "Upgrade Costs",
   "generator.broken_blocks": "Mined Blocks",
+  "generator.level": "Level",
+  "generator.available_levels": "Available Levels",
   "spawner.spawns": "Capacity",
+  "storagechest.items": "Items",
   
   "turnip.age": "Age",
   "turnip.harvested": "Harvested on",
@@ -52,5 +55,7 @@
   
   "debug.display": "Debug Mode",
   "debug.on": "ON",
-  "debug.off": "OFF"
+  "debug.off": "OFF",
+
+  "modmenu.descriptionTranslation.cytooxien-tooltips": "Extended item tooltips on Cytooxien"
 }
