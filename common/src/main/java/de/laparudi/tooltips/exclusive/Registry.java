@@ -25,25 +25,25 @@ public class Registry {
         register(1101079, Event.COLLECTION); // Schneemann (Geschmolzen)
         register(1101238, Event.COLLECTION); // Piratenfloß
         
-        // Weihnachten 2022
+        // Christmas 2022
         register(1001368, Items.LEATHER_HORSE_ARMOR, Event.CHRISTMAS, 2022); // Teddybär
         register(1001390, Items.LEATHER_HORSE_ARMOR, Event.CHRISTMAS, 2022); // Werkbank vom Nikolaus
         register(1100250, Event.CHRISTMAS, 2022); // Sitzender Schneemann
         registerMulti(1001381, 9, Items.LEATHER_HORSE_ARMOR, Event.CHRISTMAS, 2022); // Schlitten
         registerMulti(1001374, 7, Items.LEATHER_HORSE_ARMOR, Event.CHRISTMAS_ROD, 2022); // Angel-Spielzeuge
         
-        // Neujahr 2023
+        // New Year 2023
         register(1001395, Items.LEATHER_HORSE_ARMOR, Event.NEW_YEAR, 2023); // Weinflasche
         
-        // Valentinstag 2023
+        // Valentines Day 2023
         register(1001458, Items.LEATHER_HORSE_ARMOR, Event.VALENTINES_DAY, 2023); // Teddybär mit Herz
         register(1001460, Items.LEATHER_HORSE_ARMOR, Event.VALENTINES_DAY, 2023); // Herzballon
         register(1100258, Event.VALENTINES_DAY, 2023); // Hut
         
-        // Ostern 2023
+        // Easter 2023
         registerMulti(1001506, 10, Items.LEATHER_HORSE_ARMOR, Event.EASTER, 2023); // Eier
         
-        // Sommer 2023
+        // Summer 2023
         register(1100222, Event.SUMMER, 2023); // Trinkkappe
         register(1100253, Event.SUMMER, 2023); // Sonnenbrillen-Hut
         register(1100170, Items.LEATHER_HORSE_ARMOR, Event.SUMMER, 2023); // Boombox
@@ -54,21 +54,21 @@ public class Registry {
         register(1100269, Event.HALLOWEEN, 2023); // Medusa
         register(1100204, Items.LEATHER_HORSE_ARMOR, Event.HALLOWEEN, 2023); // Besen
         
-        // Weihnachten 2023
+        // Christmas 2023
         register(1100300, Event.CHRISTMAS, 2023); // Weihnachtsbaum-Hut
         register(1100278, Event.CHRISTMAS_ROD, 2023); // Wither
         register(1100302, Event.CHRISTMAS_ROD, 2023); // Piglin-Barbar
         registerMulti(1100295, 3, Event.CHRISTMAS_ROD, 2023); // Verwüster, Plünderer, Lohe
         
-        // Ostern 2024
+        // Easter 2024
         registerMulti(1100407, 9, Event.EASTER, 2024); // Eier
         register(1100427, Event.EASTER, 2024); // Rankenhut
         register(1100463, Event.EASTER, 2024); // Häschenfigur
         
-        // Sommer 2024
+        // Summer 2024
         registerMulti(1100519, 10, Event.SUMMER, 2024); // Zwerge
         
-        // Jubiläum 2024
+        // Anniversary 2024
         register(1100567, Event.ANNIVERSARY, 2024); // Kuchen
         register(1100569, Event.ANNIVERSARY, 2024); // Ballon
         register(1100575, Event.ANNIVERSARY, 2024); // Hut
@@ -76,50 +76,54 @@ public class Registry {
         // Halloween 2024
         register(1100613, Event.HALLOWEEN, 2024); // Schattendrachenkopf
         
-        // Weihnachten 2024
+        // Christmas 2024
         register(1100649, Event.CHRISTMAS, 2024); // Schneekugel-Minion (Landschaft)
         register(1100680, Event.CHRISTMAS_ROD, 2024); // Schneefuchs
         register(1100287, Event.CHRISTMAS_ROD, 2024); // Warden
         register(1100679, Event.CHRISTMAS_ROD, 2024); // Pilzkuh
         
-        // Valentinstag 2025
+        // Valentines Day 2025
         register(1100816, Event.VALENTINES_DAY, 2025); // Piglin-Statue
         
-        // Ostern 2025
+        // Easter 2025
         register(1100853, Event.EASTER, 2025); // Sonnenblumen-Hut
         registerMulti(1100859, 11, Event.EASTER, 2025); // Eier
         
-        // Sommer 2025
+        // Summer 2025
         register(1100971, Event.SUMMER, 2025); // Aloha-Blumenkrone
         registerMulti(1100982, 10, Event.SUMMER, 2025); // Zwerge
         
-        // Jubiläum 2025
+        // Anniversary 2025
         registerMulti(1101009, 3, Event.ANNIVERSARY, 2025); // Hut, Kuchen, Ballon
         
         // Halloween 2025
         register(1101042, Event.HALLOWEEN, 2025); // Kürbishexenhut
         
-        // Weihnachten 2025
+        // Christmas 2025
         register(1101076, Event.CHRISTMAS, 2025); // Schneekugel-Minion (Schneemann)
         registerMulti(1101097, 3, Event.CHRISTMAS_ROD, 2025); // Großwächter, Fahrender-Händler, Skelettpferd
         
-        // Valentinstag 2026
+        // Valentines Day 2026
         register(1101123, Event.VALENTINES_DAY, 2026); // Balancierender-Creeper-Statue
         
-        // Ostern 2026
+        // Easter 2026
         registerMulti(1101154, 9, Event.EASTER, 2026); // Eier
         register(1101166, Event.EASTER, 2026); // Löwenzahnhut
 
-        // Sommer 2026
+        // Summer 2026
         registerMulti(1101216, 10, Event.SUMMER, 2026); // Zwerge
         register(1101230, Event.SUMMER, 2026); // Burgerbrater-Mütze
 
         // Gamescom 2026
         register(1101250, Event.GAMESCOM, 2026); // Gamescom Gaming Stuhl
 
-        // Jubiläum 2026
+        // Anniversary 2026
         registerMulti(1101260, 2, Event.ANNIVERSARY, 2026); // Kuchen, Hut
         register(1101070, Items.PAPER, Event.ANNIVERSARY, 2026); // Ballon
+
+        // Halloween 2026
+        registerMulti(1101278, 2, Event.HALLOWEEN, 2026); // Kürbishut, Creeper-Kürbis
+        registerMulti(1101281, 2, Event.HALLOWEEN, 2026); // Franks Wagen, Frankenstein-Maske
     }
     
     private static void registerMulti(int startID, final int totalAmount, final Item item, final Event event, final int year) {
