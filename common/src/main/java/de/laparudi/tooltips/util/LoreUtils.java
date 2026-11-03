@@ -115,7 +115,7 @@ public class LoreUtils {
 
         if (tag.getDouble("treasurechestitems:turnip_4_weight").orElse(0.0) > 1) size += 3;
         if (tag.getBoolean("treasurechestitems:turnip_4_shiny").orElse(false)) size += 3;
-        if (tag.contains("treasurechestitems:turnip_4_appearance")) size += 3;
+        if (tag.contains("treasurechestitems:turnip_4_appearance")) size += 2;
         return size;
     }
 
