@@ -114,15 +114,10 @@ public class ItemTooltipListener {
                 } else if (specialItem.equals("watering_can") || specialItem.equals("golden_watering_can")) {
                     final int durability = bukkitCompound.getInt("treasurechestitems:" + specialItem + "_wateruses").orElse(0);
                     final Component formatted = LoreUtils.formatWateringCan(durability);
-                    final int line = specialItem.startsWith("golden") ? defaultEmptyLine -1 : defaultEmptyLine;
-                    
+
                     if (durability != 0 && !flag.isAdvanced()) {
-                        if (Language.getCurrent().equals("nl_nl")) {
-                            lines.addAll(defaultEmptyLine -1, List.of(Component.empty(), formatted));
-                            
-                        } else {
-                            lines.add(line, formatted);
-                        }
+                        lines.add(Component.empty());
+                        lines.add(defaultEmptyLine, formatted);
                     }
 
                 } else if (specialItem.equals("fishing.fishing_cup_big_fish")) {
